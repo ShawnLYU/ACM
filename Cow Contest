@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+#include <string>
+#include <math.h>
+#include <algorithm>
+#include <map>
+#include <set>
+#include <iostream>
+#include <sstream>
+#include <vector>
+using namespace std;
+#define MAXIMUM 110
+#define INFINITY -1
+int dist[MAXIMUM][MAXIMUM];
+int main() {
+	int N, M;
+	while (scanf("%d %d", &N, &M) != EOF) {
+		for (int i = 1; i <= N; i++)
+			for (int j = 1; j <= N; j++)
+				dist[i][j] = INFINITY;
+
+		for (int i = 1; i <= N; i++)
+			dist[i][i] = 0;
+
+		for (int i = 0; i < M; i++) {
+			int a, b;
+			scanf("%d %d", &a, &b);
+			dist[a][b] = 1;
+		}
+		for (int k = 1; k <= N; k++)
+			for (int i = 1; i <= N; i++)
+				for (int j = 1; j <= N; j++)
+					if (dist[i][k] != INFINITY  && dist[k][j] != INFINITY)
+						dist[i][j] = 1;
+		
+		int result = 0;
+		for (int i = 1; i <= N; i++) {
+			bool isConfirmed = true;
+			for (int j = 1; j <= N; j++) {
+				if (dist[i][j] == INFINITY && dist[j][i] == INFINITY) {
+					isConfirmed = false;
+					break;
+				}
+			}
+			if (isConfirmed) {
+				result++;
+			}
+		}
+			
+		cout << result << endl;
+	}
+
+	return 0;
+}
